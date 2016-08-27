@@ -5,8 +5,9 @@
 #     php::version { '5.3.20': }
 #
 define php::version(
-  $ensure   = 'installed',
-  $version  = $name
+  $ensure       = 'installed',
+  $ini_template = 'php/php.ini.erb',
+  $version      = $name
 ) {
   require php
   include mysql::config
@@ -107,7 +108,7 @@ define php::version(
 
     # Set up config files
     file { $php_ini:
-      content => template('php/php.ini.erb'),
+      content => template($ini_template),
       require => File[$version_config_root]
     }
 
